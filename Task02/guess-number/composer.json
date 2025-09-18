@@ -1,0 +1,24 @@
+{
+    "name": "goodlixe/guess-number",
+    "description": "Console number guessing game",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Goodlixe\\GuessNumber\\": "src/"
+        },
+        "files": [
+            "src/Controller.php",
+            "src/View.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Ilnur Faizullin"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "wp-cli/php-cli-tools": "^0.12.6"
+    }
+}
