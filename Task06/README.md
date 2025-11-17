@@ -25,6 +25,4 @@ open index.html
 
 Победа - угадать число!
 
-Удачи в игре! 🎉
-
 https://packagist.org/packages/goodlixe/guess-number
