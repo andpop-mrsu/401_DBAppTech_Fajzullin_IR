@@ -1,0 +1,628 @@
+/* Базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* Основной контент */
+main {
+    flex: 1;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Экранная система */
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Информация об игре */
+.game-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.game-info h2 {
+    color: #4a5568;
+    margin-bottom: 15px;
+}
+
+.game-info p {
+    margin-bottom: 10px;
+    color: #718096;
+}
+
+/* Ввод данных */
+.input-section {
+    text-align: center;
+}
+
+.input-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.input-section input {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+}
+
+.input-section input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Кнопки */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5a6fd8;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+}
+
+/* Заголовок игры */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.game-header h2 {
+    color: #4a5568;
+}
+
+.game-stats {
+    display: flex;
+    gap: 20px;
+    color: #718096;
+    font-weight: 600;
+}
+
+/* Ввод в игре */
+.game-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#guess-input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#guess-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Обратная связь */
+.game-feedback {
+    margin-bottom: 20px;
+    min-height: 60px;
+}
+
+.feedback {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.feedback.more {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.feedback.less {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.feedback.win {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* История попыток */
+.attempts-history {
+    margin-bottom: 20px;
+}
+
+.attempts-history h3 {
+    margin-bottom: 10px;
+    color: #4a5568;
+}
+
+.attempts-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.attempt-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.attempt-item:last-child {
+    border-bottom: none;
+}
+
+.attempt-number {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.attempt-guess {
+    color: #667eea;
+}
+
+.attempt-result {
+    font-weight: 600;
+}
+
+.attempt-result.more {
+    color: #e53e3e;
+}
+
+.attempt-result.less {
+    color: #3182ce;
+}
+
+.attempt-result.win {
+    color: #38a169;
+}
+
+/* Действия в игре */
+.game-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Экран победы */
+.win-message {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.win-message h2 {
+    color: #38a169;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.win-message p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #4a5568;
+}
+
+/* Стили для панели управления базой данных */
+.database-panel {
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.database-panel h3 {
+    text-align: center;
+    color: #4a5568;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #cbd5e0;
+}
+
+.db-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    justify-content: center;
+}
+
+.db-controls .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #4a5568;
+    color: white;
+}
+
+.db-controls .btn:hover {
+    background: #2d3748;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.db-controls .btn:nth-child(1) { background: #4299e1; }
+.db-controls .btn:nth-child(1):hover { background: #3182ce; }
+
+.db-controls .btn:nth-child(2) { background: #f56565; }
+.db-controls .btn:nth-child(2):hover { background: #e53e3e; }
+
+.db-controls .btn:nth-child(3) { background: #48bb78; }
+.db-controls .btn:nth-child(3):hover { background: #38a169; }
+
+.db-controls .btn:nth-child(4) { background: #ed8936; }
+.db-controls .btn:nth-child(4):hover { background: #dd6b20; }
+
+/* Модальные окна для БД */
+#database-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+#database-modal > div {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+#database-modal .close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+#database-modal .close-modal:hover {
+    color: #000;
+}
+
+/* Стили для списка игр в модальном окне */
+.game-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+    transition: all 0.3s;
+}
+
+.game-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-item.win {
+    border-left: 4px solid #48bb78;
+    background: linear-gradient(135deg, #f0fff4, #ffffff);
+}
+
+.game-item.loss {
+    border-left: 4px solid #f56565;
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
+}
+
+.game-header-db {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.game-id {
+    font-weight: bold;
+    color: #4a5568;
+    font-size: 0.9em;
+}
+
+.game-date {
+    color: #718096;
+    font-size: 0.9em;
+}
+
+.game-details-db {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.game-detail {
+    padding: 8px;
+    border-radius: 6px;
+    background: #f7fafc;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.game-actions-db {
+    display: flex;
+    gap: 10px;
+}
+
+.game-actions-db button {
+    flex: 1;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-replay {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-replay:hover {
+    background: #3182ce;
+}
+
+.btn-delete {
+    background: #fc8181;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #f56565;
+}
+
+/* Стили для статистики */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.stat-card h4 {
+    margin: 0 0 10px 0;
+    color: #718096;
+    font-size: 0.9em;
+}
+
+.stat-value {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.stat-value.win { color: #48bb78; }
+.stat-value.loss { color: #f56565; }
+.stat-value.total { color: #4a5568; }
+.stat-value.rate { color: #667eea; }
+
+.player-stats {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f7fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.player-stats h4 {
+    color: #4a5568;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #cbd5e0;
+}
+
+/* Подвал */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    opacity: 0.8;
+}
+
+/* Стили для ошибок */
+.error-message {
+    color: #e53e3e;
+    font-size: 14px;
+    margin: 5px 0 15px 0;
+    padding: 8px 12px;
+    background: #fed7d7;
+    border: 1px solid #feb2b2;
+    border-radius: 6px;
+    text-align: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-error {
+    border-color: #e53e3e !important;
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1) !important;
+}
+
+/* Плейсхолдер */
+#player-name::placeholder {
+    color: #a0aec0;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .game-input {
+        flex-direction: column;
+    }
+    
+    .game-actions {
+        flex-direction: column;
+    }
+    
+    .db-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .error-message {
+        max-width: 100%;
+        margin: 5px 0 15px 0;
+    }
+    
+    .game-details-db {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-actions-db {
+        flex-direction: column;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #database-modal > div {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
