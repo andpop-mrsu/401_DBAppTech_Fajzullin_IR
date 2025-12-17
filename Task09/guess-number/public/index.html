@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Угадай число - SPA версия</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Угадай число</h1>
+            <p class="subtitle">SPA версия с REST API и SQLite базой данных</p>
+        </header>
+
+        <main>
+            <!-- Экран начала игры -->
+            <div id="start-screen" class="screen active">
+                <div class="game-info">
+                    <h2>Новая игра</h2>
+                    <p>Компьютер загадал число от 1 до 100</p>
+                    <p>Попробуй угадать его за минимальное количество попыток!</p>
+                </div>
+                <div class="input-section">
+                    <label for="player-name">Твое имя:</label>
+                    <input type="text" id="player-name" placeholder="Введите ваше имя">
+                    <button id="start-game" class="btn btn-primary">Начать игру</button>
+                </div>
+            </div>
+
+            <!-- Экран игры -->
+            <div id="game-screen" class="screen">
+                <div class="game-header">
+                    <h2>Игра: <span id="current-player">Игрок</span></h2>
+                    <div class="game-stats">
+                        <span>Попытка: <span id="attempt-count">0</span></span>
+                        <span>Максимум: <span id="max-attempts">10</span></span>
+                    </div>
+                </div>
+
+                <div class="game-input">
+                    <input type="number" id="guess-input" placeholder="Введите число от 1 до 100" min="1" max="100">
+                    <button id="submit-guess" class="btn btn-primary">Проверить</button>
+                </div>
+
+                <div class="game-feedback">
+                    <div id="feedback-message" class="feedback"></div>
+                </div>
+
+                <div class="attempts-history">
+                    <h3>История попыток:</h3>
+                    <div id="attempts-list" class="attempts-list"></div>
+                </div>
+
+                <div class="game-actions">
+                    <button id="new-game" class="btn btn-secondary">Новая игра</button>
+                    <button id="show-stats" class="btn btn-secondary">Статистика</button>
+                </div>
+            </div>
+
+            <!-- Экран статистики -->
+            <div id="stats-screen" class="screen">
+                <h2>Статистика игр</h2>
+                <div id="stats-content">
+                    <p>Статистика будет доступна после завершения игр</p>
+                </div>
+                <button id="back-to-game" class="btn btn-primary">Вернуться к игре</button>
+            </div>
+
+            <!-- Экран победы -->
+            <div id="win-screen" class="screen">
+                <div class="win-message">
+                    <h2>🎉 Поздравляем!</h2>
+                    <p>Вы угадали число <span id="win-number"></span></p>
+                    <p>Количество попыток: <span id="win-attempts"></span></p>
+                    <button id="play-again" class="btn btn-primary">Играть снова</button>
+                </div>
+            </div>
+
+            <!-- Панель управления базой данных -->
+            <div class="database-panel">
+                <h3>🗄️ Управление серверной базой данных</h3>
+                <div class="db-controls">
+                    <button id="show-all-games" class="btn">
+                        <span>📋</span> Список игр
+                    </button>
+                    <button id="clear-database" class="btn">
+                        <span>🗑️</span> Очистить БД
+                    </button>
+                    <button id="export-data" class="btn">
+                        <span>📤</span> Экспорт данных
+                    </button>
+                    <button id="show-stats-db" class="btn">
+                        <span>📊</span> Статистика
+                    </button>
+                </div>
+                <div style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9em;">
+                    API: http://localhost:3000/api
+                </div>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>Лабораторная работа 9 - Микрофреймворк Slim</p>
+        </footer>
+    </div>
+
+    <!-- Подключаем JavaScript файлы в ПРАВИЛЬНОМ порядке -->
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>  <!-- ВМЕСТО database.js -->
+    <script src="js/app.js"></script>
+    <!-- В конце body, перед app.js -->
+    <script>
+        // Временный GameAPI если файл не загрузился
+        if (typeof GameAPI === 'undefined') {
+            console.log('GameAPI не загружен, создаем временный');
+            
+            class GameAPI {
+                constructor() {
+                    console.log('Временный GameAPI создан');
+                }
+                
+                async createGame(playerName, secretNumber, maxAttempts = 10) {
+                    console.log('Создание игры:', playerName);
+                    try {
+                        const response = await fetch('/api/games', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                player_name: playerName,
+                                secret_number: secretNumber,
+                                max_attempts: maxAttempts
+                            })
+                        });
+                        return await response.json();
+                    } catch (error) {
+                        console.log('Ошибка создания игры, возвращаем тестовый ID');
+                        return {id: Math.floor(Math.random() * 1000)};
+                    }
+                }
+                
+                async getAllGames() {
+                    try {
+                        const response = await fetch('/api/games');
+                        return await response.json();
+                    } catch (error) {
+                        console.log('Ошибка получения игр, возвращаем пустой массив');
+                        return [];
+                    }
+                }
+                
+                async getGame(gameId) {
+                    return null;
+                }
+                
+                async addAttempt(gameId, attemptNumber, guess, result, message, gameFinished = false, isWin = false, totalAttempts = 0) {
+                    console.log('Добавление попытки:', gameId);
+                    return {id: 1};
+                }
+                
+                async deleteGame(gameId) {
+                    return {success: true};
+                }
+                
+                async getStats() {
+                    try {
+                        const response = await fetch('/api/stats');
+                        return await response.json();
+                    } catch (error) {
+                        console.log('Ошибка получения статистики');
+                        return {
+                            overall: {total_games: 0, wins: 0, avg_attempts: 0},
+                            players: []
+                        };
+                    }
+                }
+                
+                async exportData() {
+                    const games = await this.getAllGames();
+                    const data = {
+                        exportDate: new Date().toISOString(),
+                        totalGames: games.length,
+                        games: games
+                    };
+                    
+                    // Создаем и скачиваем файл
+                    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `games-export-${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    return data;
+                }
+            }
+            
+            window.GameAPI = GameAPI;
+        }
+    </script>
+</body>
+    
+</html>
